@@ -9,6 +9,7 @@ import (
 	"fmt"
 	"io"
 	"os"
+	"strings"
 
 	"github.com/google/go-containerregistry/pkg/authn"
 	"github.com/google/go-containerregistry/pkg/name"
@@ -34,7 +35,9 @@ func getImage(image string) v1.Image {
 
 func Extract(image string, sourcePath string, destinationPath string) {
 
-	fmt.Printf("Getting image %s\n", image)
+	fmt.Printf("Getting image %s, extracting %s to %s\n", image, sourcePath, destinationPath)
+
+	sourcePath = strings.TrimPrefix(sourcePath, "/")
 	img := getImage(image)
 
 	flatFS := mutate.Extract(img)
